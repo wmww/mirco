@@ -17,7 +17,6 @@
  */
 
 #include "egwindowmanager.h"
-#include "egwallpaper.h"
 
 #include <miral/application_info.h>
 #include <miral/window_info.h>
@@ -421,9 +420,8 @@ bool egmde::WindowManagerPolicy::begin_pointer_gesture(
     return true;
 }
 
-egmde::WindowManagerPolicy::WindowManagerPolicy(WindowManagerTools const& tools, Wallpaper const& wallpaper) :
-    CanonicalWindowManagerPolicy{tools},
-    wallpaper{&wallpaper}
+egmde::WindowManagerPolicy::WindowManagerPolicy(WindowManagerTools const& tools) :
+    CanonicalWindowManagerPolicy{tools}
 {
 }
 
@@ -431,11 +429,5 @@ miral::WindowSpecification egmde::WindowManagerPolicy::place_new_window(
     miral::ApplicationInfo const& app_info, miral::WindowSpecification const& request_parameters)
 {
     auto result = CanonicalWindowManagerPolicy::place_new_window(app_info, request_parameters);
-
-    if (app_info.application() == wallpaper->session())
-    {
-        result.type() = mir_window_type_decoration;
-    }
-
     return result;
 }

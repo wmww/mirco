@@ -16,9 +16,7 @@
  * Authored by: Alan Griffiths <alan@octopull.co.uk>
  */
 
-#include "egwallpaper.h"
 #include "egwindowmanager.h"
-#include "eglauncher.h"
 
 #include <miral/append_event_filter.h>
 #include <miral/command_line_option.h>
@@ -29,11 +27,9 @@
 #include <miral/set_window_management_policy.h>
 #include <miral/version.h>
 #include <miral/wayland_extensions.h>
-
-#if MIRAL_VERSION >= MIR_VERSION_NUMBER(2, 4, 0)
 #include <miral/x11_support.h>
 #include <miral/display_configuration.h>
-#endif
+#include <miral/external_client.h>
 
 #include <linux/input.h>
 
@@ -43,10 +39,10 @@ int main(int argc, char const* argv[])
 {
     MirRunner runner{argc, argv};
 
-    egmde::Wallpaper wallpaper;
+//     egmde::Wallpaper wallpaper;
 
     ExternalClientLauncher external_client_launcher;
-    egmde::Launcher launcher{external_client_launcher};
+//     egmde::Launcher launcher{external_client_launcher};
 
     auto const keyboard_shortcuts = [&](MirEvent const* event)
         {
@@ -67,8 +63,8 @@ int main(int argc, char const* argv[])
 
             switch (mir_keyboard_event_scan_code(kev))
             {
-            case KEY_A:launcher.show();
-                return true;
+//             case KEY_A:launcher.show();
+//                 return true;
 
             case KEY_BACKSPACE:
                 runner.stop();
@@ -106,14 +102,14 @@ int main(int argc, char const* argv[])
             if (mir_touch_event_axis_value(tev, 0, mir_touch_axis_x) >= 5)
                 return false;
 
-            launcher.show();
+//             launcher.show();
             gesture = true;
             return true;
         };
 
 
-    runner.add_stop_callback([&] { wallpaper.stop(); });
-    runner.add_stop_callback([&] { launcher.stop(); });
+//     runner.add_stop_callback([&] { wallpaper.stop(); });
+//     runner.add_stop_callback([&] { launcher.stop(); });
 
     return runner.run_with(
         {
@@ -122,16 +118,16 @@ int main(int argc, char const* argv[])
             WaylandExtensions{},
             DisplayConfiguration{runner},
 #endif
-            CommandLineOption{[&](auto& option) { wallpaper.top(option);},
-                              "wallpaper-top",    "Colour of wallpaper RGB", "0x000000"},
-            CommandLineOption{[&](auto& option) { wallpaper.bottom(option);},
-                              "wallpaper-bottom", "Colour of wallpaper RGB", EGMDE_WALLPAPER_BOTTOM},
-            StartupInternalClient{std::ref(wallpaper)},
+//             CommandLineOption{[&](auto& option) { wallpaper.top(option);},
+//                               "wallpaper-top",    "Colour of wallpaper RGB", "0x000000"},
+//             CommandLineOption{[&](auto& option) { wallpaper.bottom(option);},
+//                               "wallpaper-bottom", "Colour of wallpaper RGB", EGMDE_WALLPAPER_BOTTOM},
+//             StartupInternalClient{std::ref(wallpaper)},
             external_client_launcher,
-            StartupInternalClient{std::ref(launcher)},
+//             StartupInternalClient{std::ref(launcher)},
             Keymap{},
             AppendEventFilter{keyboard_shortcuts},
             AppendEventFilter{touch_shortcuts},
-            set_window_management_policy<egmde::WindowManagerPolicy>(wallpaper)
+            set_window_management_policy<egmde::WindowManagerPolicy>()
         });
 }

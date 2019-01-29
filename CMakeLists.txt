@@ -16,12 +16,7 @@ find_package(Boost COMPONENTS filesystem REQUIRED)
 
 add_executable(egmde
     egmde.cpp
-    eglauncher.cpp eglauncher.h
-    egwallpaper.cpp egwallpaper.h
-    egwindowmanager.cpp egwindowmanager.h
-    egworker.cpp egworker.h
-    printer.cpp printer.h
-        egfullscreenclient.cpp egfullscreenclient.h)
+    egwindowmanager.cpp egwindowmanager.h)
 
 execute_process(
     COMMAND grep ^NAME= /etc/os-release 
@@ -43,11 +38,6 @@ set_source_files_properties(egmde.cpp PROPERTIES COMPILE_DEFINITIONS EGMDE_WALLP
 target_include_directories(egmde PUBLIC SYSTEM ${MIRAL_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS} ${FREETYPE_INCLUDE_DIRS})
 target_link_libraries(     egmde               ${MIRAL_LDFLAGS}      ${WAYLAND_CLIENT_LIBRARIES}  ${Boost_LIBRARIES}    ${FREETYPE_LIBRARIES})
 target_link_libraries(     egmde               ${XKBCOMMON_LIBRARIES})
-
-
-add_custom_target(egmde-launch ALL
-    cp ${CMAKE_CURRENT_SOURCE_DIR}/egmde-launch.sh ${CMAKE_BINARY_DIR}/egmde-launch
-)
 
 install(PROGRAMS ${CMAKE_BINARY_DIR}/egmde-launch ${CMAKE_BINARY_DIR}/egmde
     DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
