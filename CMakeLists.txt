@@ -15,8 +15,8 @@ pkg_check_modules(XKBCOMMON xkbcommon REQUIRED)
 find_package(Boost COMPONENTS filesystem REQUIRED)
 
 add_executable(egmde
-    egmde.cpp
-    egwindowmanager.cpp egwindowmanager.h)
+    main.cpp
+    window_manager_policy.cpp window_manager_policy.h)
 
 execute_process(
     COMMAND grep ^NAME= /etc/os-release 

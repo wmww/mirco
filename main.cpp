@@ -16,7 +16,7 @@
  * Authored by: Alan Griffiths <alan@octopull.co.uk>
  */
 
-#include "egwindowmanager.h"
+#include "window_manager_policy.h"
 
 #include <miral/append_event_filter.h>
 #include <miral/command_line_option.h>
