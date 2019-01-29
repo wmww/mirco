@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 cmake_policy(SET CMP0015 NEW)
 cmake_policy(SET CMP0022 NEW)
 
-project(egmde)
+project(Mirco)
 
 # Standard must be set both this way and in the flags below, to cover all cmake versions
 set(CMAKE_CXX_STANDARD 17)
@@ -15,13 +15,13 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-z,defs")
 include(FindPkgConfig)
 pkg_check_modules(MIRAL miral REQUIRED)
 
-add_executable(egmde
+add_executable(mirco
     main.cpp
     window_manager_policy.cpp window_manager_policy.h)
 
-target_include_directories(egmde PUBLIC SYSTEM ${MIRAL_INCLUDE_DIRS})
-target_link_libraries(     egmde               ${MIRAL_LDFLAGS})
+target_include_directories(mirco PUBLIC SYSTEM ${MIRAL_INCLUDE_DIRS})
+target_link_libraries(     mirco               ${MIRAL_LDFLAGS})
 
-install(PROGRAMS ${CMAKE_BINARY_DIR}/egmde
+install(PROGRAMS ${CMAKE_BINARY_DIR}/mirco
     DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
 )
