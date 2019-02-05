@@ -39,10 +39,7 @@ int main(int argc, char const* argv[])
 {
     MirRunner runner{argc, argv};
 
-//     egmde::Wallpaper wallpaper;
-
     ExternalClientLauncher external_client_launcher;
-//     egmde::Launcher launcher{external_client_launcher};
 
     auto const keyboard_shortcuts = [&](MirEvent const* event)
         {
@@ -63,9 +60,6 @@ int main(int argc, char const* argv[])
 
             switch (mir_keyboard_event_scan_code(kev))
             {
-//             case KEY_A:launcher.show();
-//                 return true;
-
             case KEY_BACKSPACE:
                 runner.stop();
                 return true;
@@ -102,29 +96,16 @@ int main(int argc, char const* argv[])
             if (mir_touch_event_axis_value(tev, 0, mir_touch_axis_x) >= 5)
                 return false;
 
-//             launcher.show();
             gesture = true;
             return true;
         };
 
-
-//     runner.add_stop_callback([&] { wallpaper.stop(); });
-//     runner.add_stop_callback([&] { launcher.stop(); });
-
     return runner.run_with(
         {
-#if MIRAL_VERSION >= MIR_VERSION_NUMBER(2, 4, 0)
             X11Support{},
             WaylandExtensions{},
             DisplayConfiguration{runner},
-#endif
-//             CommandLineOption{[&](auto& option) { wallpaper.top(option);},
-//                               "wallpaper-top",    "Colour of wallpaper RGB", "0x000000"},
-//             CommandLineOption{[&](auto& option) { wallpaper.bottom(option);},
-//                               "wallpaper-bottom", "Colour of wallpaper RGB", EGMDE_WALLPAPER_BOTTOM},
-//             StartupInternalClient{std::ref(wallpaper)},
             external_client_launcher,
-//             StartupInternalClient{std::ref(launcher)},
             Keymap{},
             AppendEventFilter{keyboard_shortcuts},
             AppendEventFilter{touch_shortcuts},
