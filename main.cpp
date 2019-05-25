@@ -103,7 +103,10 @@ int main(int argc, char const* argv[])
     return runner.run_with(
         {
             X11Support{},
-            miral::WaylandExtensions{"wl_shell:xdg_wm_base:zxdg_shell_v6:zwlr_layer_shell_v1"},
+            miral::WaylandExtensions{
+                miral::WaylandExtensions::recommended_extensions() +
+                ":zwlr_layer_shell_v1"
+                ":zxdg_output_manager_v1"},
             DisplayConfiguration{runner},
             external_client_launcher,
             Keymap{},
