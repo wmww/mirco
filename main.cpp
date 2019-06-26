@@ -1,5 +1,5 @@
 /*
- * Copyright © 2016-2018 Octopull Ltd.
+ * Copyright © 2019 Octopull Ltd.
  *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License version 3,
@@ -14,6 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * Authored by: Alan Griffiths <alan@octopull.co.uk>
+ *              William Wold <william.wold@canonical.com>
  */
 
 #include "window_manager_policy.h"
@@ -33,13 +34,11 @@
 
 #include <linux/input.h>
 
-using namespace miral;
+using namespace mirco;
 
-int main(int argc, char const* argv[])
+auto main(int argc, char const* argv[]) -> int
 {
-    MirRunner runner{argc, argv};
-
-    ExternalClientLauncher external_client_launcher;
+    miral::MirRunner runner{argc, argv};
 
     auto const keyboard_shortcuts = [&](MirEvent const* event)
         {
@@ -102,16 +101,14 @@ int main(int argc, char const* argv[])
 
     return runner.run_with(
         {
-            X11Support{},
-            miral::WaylandExtensions{
-                miral::WaylandExtensions::recommended_extensions() +
-                ":zwlr_layer_shell_v1"
-                ":zxdg_output_manager_v1"},
-            DisplayConfiguration{runner},
-            external_client_launcher,
-            Keymap{},
-            AppendEventFilter{keyboard_shortcuts},
-            AppendEventFilter{touch_shortcuts},
-            set_window_management_policy<egmde::WindowManagerPolicy>()
+            miral::X11Support{},
+            miral::WaylandExtensions{}
+                .enable(miral::WaylandExtensions::zwlr_layer_shell_v1)
+                .enable(miral::WaylandExtensions::zxdg_output_manager_v1),
+            miral::DisplayConfiguration{runner},
+            miral::Keymap{},
+            miral::AppendEventFilter{keyboard_shortcuts},
+            miral::AppendEventFilter{touch_shortcuts},
+            miral::set_window_management_policy<mirco::WindowManagerPolicy>()
         });
 }
