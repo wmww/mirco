@@ -104,6 +104,7 @@ auto main(int argc, char const* argv[]) -> int
             miral::X11Support{},
             miral::WaylandExtensions{}
                 .enable(miral::WaylandExtensions::zwlr_layer_shell_v1)
+                .enable(miral::WaylandExtensions::zwlr_foreign_toplevel_manager_v1)
                 .enable(miral::WaylandExtensions::zxdg_output_manager_v1),
             miral::DisplayConfiguration{runner},
             miral::Keymap{},
