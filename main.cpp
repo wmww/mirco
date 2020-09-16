@@ -31,10 +31,12 @@
 #include <miral/x11_support.h>
 #include <miral/display_configuration.h>
 #include <miral/external_client.h>
+#include <miral/toolkit_event.h>
 
 #include <linux/input.h>
 
 using namespace mirco;
+using namespace miral::toolkit;
 
 auto main(int argc, char const* argv[]) -> int
 {
