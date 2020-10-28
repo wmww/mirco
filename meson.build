@@ -28,4 +28,5 @@ example = executable(
     'mirco',
     srcs,
     dependencies: [miral_dep],
+    install: true,
 )
