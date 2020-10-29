@@ -10,6 +10,7 @@ add_project_arguments(
     [
         '-pthread',
         '-Werror',
+        '-Wl,--as-needed',
         'warning_level=3',
         'cpp_std=c++17',
     ],
