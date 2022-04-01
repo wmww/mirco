@@ -11,10 +11,8 @@ add_project_arguments(
         '-pthread',
         '-Werror',
         '-Wl,--as-needed',
-        'warning_level=3',
-        'cpp_std=c++17',
     ],
-    language: 'c++',
+    language: 'cpp',
 )
 
 miral_dep = dependency('miral')
@@ -28,6 +26,11 @@ srcs = [
 example = executable(
     'mirco',
     srcs,
+    override_options : [
+        'c_std=c11',
+        'cpp_std=c++17',
+        'warning_level=3',
+    ],
     dependencies: [miral_dep],
     install: true,
 )
